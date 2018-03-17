@@ -105,7 +105,14 @@ sqlQuery(ch,
          "CREATE TABLE noOutlier AS SELECT * FROM elechinc c
             WHERE c.elec > 700 AND c.income > 30000")
 
-noO <- as.matrix(sqlFetch(ch,"noOutlier", rownames="state"))
-kmeansnoO <- kmeans (noO,10)
-plot(noO, col = kmeanselenoO$cluster)
-points(kmeansnoO2$centers, col = 1:10, pch = 8)
+#calculating K 
+wss <- numeric(15) 
+for (i in 1:15) wss[i] <- sum(kmeans(noO, 
+                                     centers=i)$withinss)
+plot(1:15, wss, type="b", xlab="Number of Clusters",
+     ylab="Within groups sum of squares")
+
+#Plotting with 4 clusters
+kmeansnoO <- kmeans (noO,4)
+plot(noO, col = kmeansnoO$cluster)
+points(kmeansnoO$centers, col = 1:4, pch = 8)
