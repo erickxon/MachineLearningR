@@ -103,7 +103,7 @@ points(kmeanslog_elechinc$centers, col = 1:5, pch = 8)
 
 sqlQuery(ch,
          "CREATE table noOutlier from elechinc c
-            WHERE c.elec > 700 AND c.income)
+            WHERE c.elec > 700 AND c.income;")
 
 noO <- as.matrix(sqlFetch(ch,"noOutlier", rownames="state"))
 kmeansnoO <- kmeans (noO,10)
