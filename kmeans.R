@@ -109,31 +109,3 @@ noO <- as.matrix(sqlFetch(ch,"noOutlier", rownames="state"))
 kmeansnoO <- kmeans (noO,10)
 plot(noO, col = kmeanselenoO$cluster)
 points(kmeansnoO2$centers, col = 1:10, pch = 8)
-
-wss <- numeric(15) 
-for (i in 1:15) wss[i] <- sum(kmeans(noO, 
-                                     centers=i)$withinss)
-plot(1:15, wss, type="b", xlab="Number of Clusters",
-     ylab="Within groups sum of squares")
-
-
- colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77")
-  elechinc$colorBuckets <- as.numeric(cut(elechinc$elec, c(0, 2, 4, 6, 8, 10, 100)))
-
-
-# define color buckets
-colors = c("#F1EEF6", "#D4B9DA", "#C994C7", "#DF65B0", "#DD1C77", "#980043")
-unemp$colorBuckets <- as.numeric(cut(elechinc$elechinc, c(0, 2, 4, 6, 8, 10, 100)))
-leg.txt <- c("<2%", "2-4%", "4-6%", "6-8%", "8-10%", ">10%")
-# align data with map definitions by (partial) matching state,county
-# names, which include multiple polygons for some counties
-cnty.fips <- county.fips$fips[match(map("county", plot=FALSE)$names,
-county.fips$polyname)]
-colorsmatched <- unemp$colorBuckets [match(cnty.fips, unemp$fips)]
-# draw map
-map("county", col = colors[colorsmatched], fill = TRUE, resolution = 0,
-lty = 0, projection = "polyconic")
-map("state", col = "white", fill = FALSE, add = TRUE, lty = 1, lwd = 0.2,
-projection="polyconic")
-title("unemployment by county, 2009")
-legend("topright", leg.txt, horiz = TRUE, fill = colors)
